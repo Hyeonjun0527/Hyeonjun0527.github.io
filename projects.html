@@ -3,24 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>채팅 - 최현준</title>
+    <title>메모장 - 최현준</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
-        .chat-container {
+        .memo-container {
             max-width: 600px;
             margin: 20px auto;
             border: 2px solid #333;
         }
         
-        .chat-header {
+        .memo-header {
             background: #f0f0f0;
             padding: 15px;
             border-bottom: 1px solid #333;
             text-align: center;
         }
         
-        .chat-messages {
+        .memo-list {
             height: 300px;
             overflow-y: scroll;
             padding: 10px;
@@ -28,22 +28,22 @@
             border-bottom: 1px solid #333;
         }
         
-        .message {
+        .memo-item {
             margin-bottom: 10px;
             padding: 8px;
             border: 1px solid #ccc;
         }
         
-        .message-content {
+        .memo-content {
             margin-bottom: 5px;
         }
         
-        .message-info {
+        .memo-date {
             font-size: 12px;
             color: #666;
         }
         
-        .chat-input {
+        .memo-input {
             padding: 10px;
             background: #f9f9f9;
         }
@@ -52,36 +52,43 @@
             margin-bottom: 10px;
         }
         
-        .input-group input {
+        .input-group textarea {
+            width: 100%;
             padding: 8px;
             border: 1px solid #333;
-            margin-right: 5px;
+            resize: vertical;
+            font-family: inherit;
         }
         
-        .name-input {
-            width: 120px;
-        }
-        
-        .message-input {
-            width: 300px;
-        }
-        
-        .send-btn {
+        .add-btn {
             padding: 8px 15px;
             background: #ddd;
             border: 1px solid #333;
             cursor: pointer;
         }
         
-        .send-btn:hover {
+        .add-btn:hover {
             background: #ccc;
         }
         
-        .chat-info {
+        .memo-info {
             background: #f5f5f5;
             padding: 10px;
             margin: 10px 0;
             border: 1px solid #ddd;
+        }
+        
+        .delete-btn {
+            float: right;
+            background: #ffcccc;
+            border: 1px solid #cc0000;
+            padding: 2px 6px;
+            font-size: 10px;
+            cursor: pointer;
+        }
+        
+        .delete-btn:hover {
+            background: #ff9999;
         }
     </style>
 </head>
@@ -92,37 +99,33 @@
                 <h1>최현준</h1>
                 <ul>
                     <li><a href="index.html">자기소개</a></li>
-                    <li><a href="projects.html" class="active">채팅</a></li>
+                    <li><a href="projects.html" class="active">메모장</a></li>
                     <li><a href="contact.html">연락처</a></li>
                 </ul>
-                <div style="color: #666; font-size: 0.9em; margin-left: auto;">
-                    👥 <span id="visitorCount">0</span>명
-                </div>
             </div>
         </nav>
     </header>
 
     <main>
         <div class="container">
-            <div class="chat-info">
-                방문자 채팅 - 메시지는 브라우저에 저장됩니다.
+            <div class="memo-info">
+                메모장
             </div>
 
-            <div class="chat-container">
-                <div class="chat-header">
-                    <h3>채팅</h3>
-                    <span id="messageCount">메시지 0개</span>
+            <div class="memo-container">
+                <div class="memo-header">
+                    <h3>메모장</h3>
+                    <span id="memoCount">메모 0개</span>
                 </div>
                 
-                <div class="chat-messages" id="chatMessages">
-                    <!-- 메시지들이 여기에 표시됩니다 -->
+                <div class="memo-list" id="memoList">
+                    <!-- 메모들이 여기에 표시됩니다 -->
                 </div>
                 
-                <div class="chat-input">
+                <div class="memo-input">
                     <div class="input-group">
-                        <input type="text" id="nameInput" class="name-input" placeholder="이름" maxlength="20">
-                        <input type="text" id="messageInput" class="message-input" placeholder="메시지" maxlength="200">
-                        <button onclick="sendMessage()" class="send-btn">전송</button>
+                        <textarea id="memoInput" placeholder="메모를 입력하세요" maxlength="200"></textarea>
+                        <button onclick="addMemo()" class="add-btn">추가</button>
                     </div>
                 </div>
             </div>
@@ -131,69 +134,71 @@
 
     <footer>
         <p>&copy; 2024 최현준. All rights reserved.</p>
+        <p style="font-size: 0.8em; color: #ffffff; margin-top: 5px;">
+             방문자 수: <span id="visitorCount">0</span>명
+        </p>
     </footer>
 
     <script>
         $(document).ready(function() {
             updateVisitorCount();
-            loadMessages();
+            loadMemos();
             
-            $('#messageInput, #nameInput').keypress(function(e) {
+            $('#memoInput').keypress(function(e) {
                 if (e.which == 13) {
-                    sendMessage();
+                    addMemo();
                 }
             });
         });
 
-        function sendMessage() {
-            const name = $('#nameInput').val().trim();
-            const message = $('#messageInput').val().trim();
+        function addMemo() {
+            const memo = $('#memoInput').val().trim();
             
-            if (!name || !message) {
-                alert('이름과 메시지를 입력하세요.');
+            if (!memo) {
+                alert('메모를 입력하세요.');
                 return;
             }
             
-            const messageObj = {
-                name: name,
-                content: message,
+            const memoObj = {
+                content: memo,
                 timestamp: new Date().toLocaleString('ko-KR')
             };
             
-            let messages = JSON.parse(localStorage.getItem('chatMessages') || '[]');
-            messages.push(messageObj);
+            let memos = JSON.parse(localStorage.getItem('memos') || '[]');
+            memos.push(memoObj);
             
-            if (messages.length > 50) {
-                messages = messages.slice(-50);
+            if (memos.length > 50) {
+                memos = memos.slice(-50);
             }
             
-            localStorage.setItem('chatMessages', JSON.stringify(messages));
-            $('#messageInput').val('');
-            loadMessages();
+            localStorage.setItem('memos', JSON.stringify(memos));
+            $('#memoInput').val('');
+            loadMemos();
         }
 
-        function loadMessages() {
-            const messages = JSON.parse(localStorage.getItem('chatMessages') || '[]');
-            const chatMessages = $('#chatMessages');
+        function loadMemos() {
+            const memos = JSON.parse(localStorage.getItem('memos') || '[]');
+            const memoList = $('#memoList');
             
-            chatMessages.empty();
+            memoList.empty();
             
-            if (messages.length === 0) {
-                chatMessages.html('<div style="text-align: center; padding: 20px;">메시지가 없습니다.</div>');
+            if (memos.length === 0) {
+                memoList.html('<div style="text-align: center; padding: 20px;">메모가 없습니다.</div>');
             } else {
-                messages.forEach(msg => {
-                    const messageDiv = $(`
-                        <div class="message">
-                            <div class="message-content">${escapeHtml(msg.content)}</div>
-                            <div class="message-info">${escapeHtml(msg.name)} - ${msg.timestamp}</div>
+                memos.forEach(memo => {
+                    const memoDiv = $(`
+                        <div class="memo-item">
+                            <div class="memo-content">${escapeHtml(memo.content)}</div>
+                            <div class="memo-date">${memo.timestamp}</div>
+                            <button onclick="deleteMemo(${memos.indexOf(memo)})" class="delete-btn">삭제</button>
                         </div>
                     `);
-                    chatMessages.append(messageDiv);
+                    memoList.append(memoDiv);
                 });
             }
             
-            $('#messageCount').text(`메시지 ${messages.length}개`);
-            chatMessages.scrollTop(chatMessages[0].scrollHeight);
+            $('#memoCount').text(`메모 ${memos.length}개`);
+            memoList.scrollTop(memoList[0].scrollHeight);
         }
 
         function escapeHtml(text) {
@@ -205,6 +210,14 @@
         function updateVisitorCount() {
             const currentCount = localStorage.getItem('visitorCount') || '0';
             $('#visitorCount').text(currentCount);
+        }
+
+        function deleteMemo(index) {
+            let memos = JSON.parse(localStorage.getItem('memos') || '[]');
+            memos.splice(index, 1);
+            
+            localStorage.setItem('memos', JSON.stringify(memos));
+            loadMemos();
         }
     </script>
 </body>
