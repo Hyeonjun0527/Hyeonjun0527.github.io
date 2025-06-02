@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>채팅 - 최현준</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .chat-container {
+            max-width: 600px;
+            margin: 20px auto;
+            border: 2px solid #333;
+        }
+        
+        .chat-header {
+            background: #f0f0f0;
+            padding: 15px;
+            border-bottom: 1px solid #333;
+            text-align: center;
+        }
+        
+        .chat-messages {
+            height: 300px;
+            overflow-y: scroll;
+            padding: 10px;
+            background: white;
+            border-bottom: 1px solid #333;
+        }
+        
+        .message {
+            margin-bottom: 10px;
+            padding: 8px;
+            border: 1px solid #ccc;
+        }
+        
+        .message-content {
+            margin-bottom: 5px;
+        }
+        
+        .message-info {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .chat-input {
+            padding: 10px;
+            background: #f9f9f9;
+        }
+        
+        .input-group {
+            margin-bottom: 10px;
+        }
+        
+        .input-group input {
+            padding: 8px;
+            border: 1px solid #333;
+            margin-right: 5px;
+        }
+        
+        .name-input {
+            width: 120px;
+        }
+        
+        .message-input {
+            width: 300px;
+        }
+        
+        .send-btn {
+            padding: 8px 15px;
+            background: #ddd;
+            border: 1px solid #333;
+            cursor: pointer;
+        }
+        
+        .send-btn:hover {
+            background: #ccc;
+        }
+        
+        .chat-info {
+            background: #f5f5f5;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="nav-container">
+                <h1>최현준</h1>
+                <ul>
+                    <li><a href="index.html">자기소개</a></li>
+                    <li><a href="projects.html" class="active">채팅</a></li>
+                    <li><a href="contact.html">연락처</a></li>
+                </ul>
+                <div style="color: #666; font-size: 0.9em; margin-left: auto;">
+                    👥 <span id="visitorCount">0</span>명
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="chat-info">
+                방문자 채팅 - 메시지는 브라우저에 저장됩니다.
+            </div>
+
+            <div class="chat-container">
+                <div class="chat-header">
+                    <h3>채팅</h3>
+                    <span id="messageCount">메시지 0개</span>
+                </div>
+                
+                <div class="chat-messages" id="chatMessages">
+                    <!-- 메시지들이 여기에 표시됩니다 -->
+                </div>
+                
+                <div class="chat-input">
+                    <div class="input-group">
+                        <input type="text" id="nameInput" class="name-input" placeholder="이름" maxlength="20">
+                        <input type="text" id="messageInput" class="message-input" placeholder="메시지" maxlength="200">
+                        <button onclick="sendMessage()" class="send-btn">전송</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 최현준. All rights reserved.</p>
+    </footer>
+
+    <script>
+        $(document).ready(function() {
+            updateVisitorCount();
+            loadMessages();
+            
+            $('#messageInput, #nameInput').keypress(function(e) {
+                if (e.which == 13) {
+                    sendMessage();
+                }
+            });
+        });
+
+        function sendMessage() {
+            const name = $('#nameInput').val().trim();
+            const message = $('#messageInput').val().trim();
+            
+            if (!name || !message) {
+                alert('이름과 메시지를 입력하세요.');
+                return;
+            }
+            
+            const messageObj = {
+                name: name,
+                content: message,
+                timestamp: new Date().toLocaleString('ko-KR')
+            };
+            
+            let messages = JSON.parse(localStorage.getItem('chatMessages') || '[]');
+            messages.push(messageObj);
+            
+            if (messages.length > 50) {
+                messages = messages.slice(-50);
+            }
+            
+            localStorage.setItem('chatMessages', JSON.stringify(messages));
+            $('#messageInput').val('');
+            loadMessages();
+        }
+
+        function loadMessages() {
+            const messages = JSON.parse(localStorage.getItem('chatMessages') || '[]');
+            const chatMessages = $('#chatMessages');
+            
+            chatMessages.empty();
+            
+            if (messages.length === 0) {
+                chatMessages.html('<div style="text-align: center; padding: 20px;">메시지가 없습니다.</div>');
+            } else {
+                messages.forEach(msg => {
+                    const messageDiv = $(`
+                        <div class="message">
+                            <div class="message-content">${escapeHtml(msg.content)}</div>
+                            <div class="message-info">${escapeHtml(msg.name)} - ${msg.timestamp}</div>
+                        </div>
+                    `);
+                    chatMessages.append(messageDiv);
+                });
+            }
+            
+            $('#messageCount').text(`메시지 ${messages.length}개`);
+            chatMessages.scrollTop(chatMessages[0].scrollHeight);
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        function updateVisitorCount() {
+            const currentCount = localStorage.getItem('visitorCount') || '0';
+            $('#visitorCount').text(currentCount);
+        }
+    </script>
+</body>
+</html> 

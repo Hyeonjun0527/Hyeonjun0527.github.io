@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>자기소개 - 최현준</title>
+        <link rel="stylesheet" href="styles.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    </head>
+    <body>
+        <header>
+            <nav>
+                <div class="nav-container">
+                    <h1>최현준</h1>
+                    <ul>
+                        <li><a href="index.html" class="active">자기소개</a></li>
+                        <li><a href="projects.html">채팅</a></li>
+                        <li><a href="contact.html">연락처</a></li>
+                    </ul>
+                    <div style="color: #666; font-size: 0.9em; margin-left: auto;">
+                        👥 <span id="visitorCount">0</span>명
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <main>
+            <div class="container">
+                <div class="profile-section">
+                    <div class="profile-img">
+                        <img src="프로필사진.png" alt="프로필사진" class="profile-circle">
+                    </div>
+                    <div class="profile-info">
+                        <h2>최현준</h2>
+                        <p>백엔드 개발자</p>
+                        <div class="profile-links">
+                            <a href="https://github.com/hyeonjun0527" target="_blank" class="profile-link">
+                                <span>🐙 GitHub</span>
+                            </a>
+                            <a href="https://osumaniaddict527.tistory.com/" target="_blank" class="profile-link">
+                                <span>📝 블로그</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tabs-container">
+                    <div class="tab-buttons">
+                        <button class="tab-btn active"
+                            data-tab="about">소개</button>
+                        <button class="tab-btn" data-tab="skills">기술</button>
+                        <button class="tab-btn"
+                            data-tab="experience">경력</button>
+                    </div>
+
+                    <div class="tab-content">
+                        <div id="about" class="tab-pane active">
+                            <h3>자기소개</h3>
+                            <p>안녕하세요. 백엔드 개발에 관심이 많은 최현준입니다.</p>
+                            <p>새로운 기술을 배우고 적용하는 것을 좋아합니다.</p>
+                            <p>사용자 경험을 중시하며, 효율적인 코드를 작성하려고 노력합니다.</p>
+
+                            <h4>최근 관심 분야</h4>
+                            <ul>
+                                <li>백엔드 개발</li>
+                                <li>API 설계 및 구현</li>
+                                <li>데이터베이스 설계 및 ORM</li>
+                                <li>배치 처리</li>
+                                <li>클라우드 기반 인프라 구축</li>
+                            </ul>
+                        </div>
+
+                        <div id="skills" class="tab-pane">
+                            <h3>기술 스택</h3>
+
+                            <div class="skill-category">
+                                <h4>백엔드</h4>
+                                <ul>
+                                    <li>Node.js</li>
+                                    <li>Python</li>
+                                    <li>Java</li>
+                                    <li>Express.js</li>
+                                    <li>Spring Boot</li>
+                                    <li>JPA</li>
+                                </ul>
+                            </div>
+
+                            <div class="skill-category">
+                                <h4>데이터베이스</h4>
+                                <ul>
+                                    <li>MySQL</li>
+                                    <li>MongoDB</li>
+                                    <li>PostgreSQL</li>
+                                    <li>Redis</li>
+                                </ul>
+                            </div>
+
+                            <div class="skill-category">
+                                <h4>프론트엔드</h4>
+                                <ul>
+                                    <li>HTML/CSS</li>
+                                    <li>JavaScript</li>
+                                    <li>jQuery</li>
+                                    <li>React (기초)</li>
+                                </ul>
+                            </div>
+
+                            <div class="skill-category">
+                                <h4>도구 & 인프라</h4>
+                                <ul>
+                                    <li>Git</li>
+                                    <li>Docker</li>
+                                    <li>AWS</li>
+                                    <li>VS Code</li>
+                                    <li>Postman</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div id="experience" class="tab-pane">
+                            <h3>경력 및 경험</h3>
+
+                            <div class="experience-item">
+                                <h4>코드제로투원 - CS 기상 스터디 플랫폼</h4>
+                                <p class="period">2025.01 - 현재 (진행중)</p>
+                                <p class="position">백엔드 개발자</p>
+                                <div style="margin: 10px 0;">
+                                    <img src="코드제로투원.png" alt="코드제로투원"
+                                        style="width: 100px; height: auto; border-radius: 5px;">
+                                </div>
+                                <p
+                                    style="font-weight: bold; color: #555; margin-bottom: 10px;">
+                                    📚 CS 기상 스터디 자체 플랫폼 구축 (1차 MVP)
+                                </p>
+                                <p
+                                    style="margin-bottom: 10px; color: #666; font-size: 0.95rem;">
+                                    현재 약 100여명의 멤버들이 진행하고 있는 CS 기상 스터디에 대한 자체
+                                    플랫폼을 구축하는 프로젝트입니다.
+                                    수 천~ 수 만 명의 스터디원들도 수용할 수 있는 시스템 기반을 만들어 추후
+                                    교육, 채용서비스를 추가하고
+                                    서비스대상을 IT전체 분야로 확대할 수 있는 초석을 다지고 있습니다.
+                                </p>
+                                <ul>
+                                    <li>ERD 설계 및 API 명세서 작성</li>
+                                    <li>사용자 인증 및 권한 관리 시스템 구현</li>
+                                    <li>매칭 도메인 백엔드 로직 구현</li>
+                                    <li>팀 협업: GitHub PR, 코드리뷰, Jira 이슈관리</li>
+                                </ul>
+                                <p
+                                    style="margin-top: 10px; color: #777; font-size: 0.9rem;">
+                                    <strong>📅 목표 일정:</strong> 2025년 6월말 서비스 런칭
+                                    예정<br>
+                                    <strong>🔗 사이트:</strong> 6월말에 이용 가능 예정
+                                </p>
+                            </div>
+
+                            <div class="experience-item">
+                                <h4>클라우드기반 웹 데브옵스 프로젝트 개발자 과정 7기</h4>
+                                <p class="period">2024.01 - 2024.07</p>
+                                <p class="position">교육생 / 데이터베이스 관리자</p>
+                                <ul>
+                                    <li><strong>프로젝트명:</strong> Noon</li>
+                                    <li><strong>팀명:</strong> KuberMaptes</li>
+                                    <li>데이터베이스 관리자 역할 수행</li>
+                                    <li>회원 및 프로필 기능 담당 개발</li>
+                                    <li>클라우드 기반 인프라 구축 지원</li>
+                                </ul>
+                                <p
+                                    style="margin-top: 10px; color: #777; font-size: 0.9rem;">
+                                    <strong>🏆 자격증:</strong> NAVER CLOUD
+                                    PLATFORM Certified Professional 취득<br>
+                                    <strong>⭐프로젝트 자료:</strong>
+                                    <a href="noon_project_ppt.pptx" download style="margin-left: 5px; text-decoration: none; color: #007bff;">
+                                        📊 PPT
+                                    </a>
+                                    <a href="project_report.pdf" download style="margin-left: 10px; text-decoration: none; color: #007bff;">
+                                        📄 PDF
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 최현준. All rights reserved.</p>
+        </footer>
+
+        <script>
+        $(document).ready(function() {
+            updateVisitorCount();
+            
+            $('.tab-btn').on('click', function() {
+                var targetTab = $(this).data('tab');
+                $('.tab-btn').removeClass('active');
+                $(this).addClass('active');
+                $('.tab-pane').removeClass('active').hide();
+                $('#' + targetTab).addClass('active').fadeIn(300);
+            });
+            
+            
+            $('.tab-pane').hide();
+            $('#about').show();
+            
+            
+            $('nav a').on('click', function(e) {
+                if ($(this).attr('href').indexOf('#') === 0) {
+                    e.preventDefault();
+                    var target = $($(this).attr('href'));
+                    if (target.length) {
+                        $('html, body').animate({
+                            scrollTop: target.offset().top - 80
+                        }, 600);
+                    }
+                }
+            });
+            
+            
+            $('.profile-circle').hover(
+                function() {
+                    $(this).animate({
+                        opacity: 0.8,
+                        transform: 'scale(1.05)'
+                    }, 200);
+                },
+                function() {
+                    $(this).animate({
+                        opacity: 1,
+                        transform: 'scale(1)'
+                    }, 200);
+                }
+            );
+            
+            
+            $('.profile-link').hover(
+                function() {
+                    $(this).animate({
+                        transform: 'translateY(-2px)'
+                    }, 150);
+                },
+                function() {
+                    $(this).animate({
+                        transform: 'translateY(0)'
+                    }, 150);
+                }
+            );
+            
+            
+            $('.skill-category').hover(
+                function() {
+                    $(this).animate({
+                        backgroundColor: '#f0f0f0'
+                    }, 200);
+                },
+                function() {
+                    $(this).animate({
+                        backgroundColor: '#fafafa'
+                    }, 200);
+                }
+            );
+        });
+        
+        function updateVisitorCount() {
+            const hasVisited = sessionStorage.getItem('hasVisited');
+            
+            if (!hasVisited) {
+                let visitorCount = parseInt(localStorage.getItem('visitorCount') || '0');
+                visitorCount += 1;
+                localStorage.setItem('visitorCount', visitorCount.toString());
+                
+                sessionStorage.setItem('hasVisited', 'true');
+            }
+            
+            const currentCount = localStorage.getItem('visitorCount') || '0';
+            $('#visitorCount').text(currentCount);
+        }
+    </script>
+    </body>
+</html>

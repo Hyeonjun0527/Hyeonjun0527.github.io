@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>연락처 - 최현준</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="nav-container">
+                <h1>최현준</h1>
+                <ul>
+                    <li><a href="index.html">자기소개</a></li>
+                    <li><a href="projects.html">채팅</a></li>
+                    <li><a href="contact.html" class="active">연락처</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <h2>연락처</h2>
+            <p>언제든지 연락주세요!</p>
+
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>연락 정보</h3>
+                    <div class="contact-item">
+                        <span class="contact-icon">📧</span>
+                        <div>
+                            <h4>이메일</h4>
+                            <p><a href="mailto:hyeonjun0527@gmail.com">hyeonjun0527@gmail.com</a></p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <span class="contact-icon">💼</span>
+                        <div>
+                            <h4>LinkedIn</h4>
+                            <p><a href="#" target="_blank">LinkedIn 프로필</a></p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <span class="contact-icon">🐙</span>
+                        <div>
+                            <h4>GitHub</h4>
+                            <p><a href="https://github.com/hyeonjun0527" target="_blank">github.com/hyeonjun0527</a></p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <span class="contact-icon">📝</span>
+                        <div>
+                            <h4>블로그</h4>
+                            <p><a href="https://osumaniaddict527.tistory.com/" target="_blank">개발 블로그</a></p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <span class="contact-icon">📍</span>
+                        <div>
+                            <h4>위치</h4>
+                            <p>대한민국, 서울</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 최현준. All rights reserved.</p>
+        <p style="font-size: 0.8em; color: #333; margin-top: 5px;">
+            👥 방문자 수: <span id="visitorCount">0</span>명
+        </p>
+    </footer>
+
+    <script>
+        $(document).ready(function() {
+            updateVisitorCount();
+            
+            $('.contact-item').hover(
+                function() {
+                    $(this).animate({
+                        backgroundColor: '#f8f9fa',
+                        paddingLeft: '25px'
+                    }, 200);
+                },
+                function() {
+                    $(this).animate({
+                        backgroundColor: 'transparent',
+                        paddingLeft: '20px'
+                    }, 200);
+                }
+            );
+            
+            $('a[target="_blank"]').on('click', function(e) {
+                var href = $(this).attr('href');
+                if (href === '#') {
+                    e.preventDefault();
+                    alert('해당 링크는 아직 설정되지 않았습니다.');
+                }
+            });
+        });
+        
+        function updateVisitorCount() {
+            const currentCount = localStorage.getItem('visitorCount') || '0';
+            $('#visitorCount').text(currentCount);
+        }
+    </script>
+</body>
+</html> 
